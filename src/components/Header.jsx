@@ -5,10 +5,6 @@ import CoffeeLineIcon from "./CoffeeLineIcon";
 const Header = () => {
   return (
     <div>
-        {/* Navbar */}
-      <div>
-        <Navbar></Navbar>
-      </div>
 
       {/* Banner section */}
       <div
