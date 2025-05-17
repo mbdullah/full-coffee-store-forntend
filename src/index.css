@@ -9,3 +9,7 @@ body {
 .specific-font{
     font-family: 'Rancho', cursive;
 }
+
+a.active {
+  text-decoration: underline;
+}
