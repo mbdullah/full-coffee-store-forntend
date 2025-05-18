@@ -1,10 +1,50 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const { loginUser } = useContext(AuthContext);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    // send data to firebase Auth
+    loginUser(email, password)
+      .then((result) => {
+        Swal.fire({
+          title: "Login Successfully!",
+          icon: "success",
+          draggable: true,
+        });
+        const userInfo = {
+          email,
+          lastSignInTime: result.user?.metadata?.lastSignInTime,
+        };
+        // Update data from db
+        fetch("http://localhost:3000/users", {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("data after db", data);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="flex justify-center items-center mt-20">
       <form
+        onSubmit={handleLogin}
         className="space-y-2 w-full max-w-md mx-auto bg-[#331A15] p-6 my-10 rounded-2xl border border-gray-700"
       >
         <h3
@@ -44,7 +84,10 @@ const Login = () => {
 
         <p className="text-lg text-white mt-4 text-center">
           Already Have An Account ?
-          <Link className="text-secondary underline font-semibold" to="/register">
+          <Link
+            className="text-secondary underline font-semibold"
+            to="/register"
+          >
             {" "}
             Register
           </Link>
@@ -52,9 +95,7 @@ const Login = () => {
         <div className="divider divider-accent  text-[#D2B48C]">OR</div>
 
         {/* Google */}
-        <button
-          className="btn rounded-xl bg-white text-black border-[#e5e5e5]  h-12 w-full"
-        >
+        <button className="btn rounded-xl bg-white text-black border-[#e5e5e5]  h-12 w-full">
           <svg
             aria-label="Google logo"
             width="16"
