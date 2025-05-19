@@ -1,6 +1,5 @@
-import React from "react";
-import { Link } from "react-router";
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { Link } from "react-router";
 import Swal from "sweetalert2";
 
 const AddCoffe = () => {
@@ -12,7 +11,7 @@ const AddCoffe = () => {
     console.log(objectForm);
 
     // Send Data to DB
-    fetch("http://localhost:3000/coffees", {
+    fetch("https://pet-store-server.vercel.app/coffees", {
       method: "POST",
       headers: {
         "content-type": "application/json",

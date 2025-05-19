@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router";
-import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Login = () => {
   const { loginUser } = useContext(AuthContext);
@@ -25,7 +25,7 @@ const Login = () => {
           lastSignInTime: result.user?.metadata?.lastSignInTime,
         };
         // Update data from db
-        fetch("http://localhost:3000/users", {
+        fetch("https://pet-store-server.vercel.app/users", {
           method: "PATCH",
           headers: {
             "content-type": "application/json",

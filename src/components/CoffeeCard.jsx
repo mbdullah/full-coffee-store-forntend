@@ -1,9 +1,8 @@
-import React from "react";
-import { IoMdEye } from "react-icons/io";
 import { FaPen } from "react-icons/fa";
+import { IoMdEye } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
-import Swal from "sweetalert2";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
 
 const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
   const { name, quantity, price, photo, _id } = coffee;
@@ -19,7 +18,7 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/coffees/${_id}`, {
+        fetch(`https://pet-store-server.vercel.app/coffees/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -30,7 +29,7 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
                 text: "Your file has been deleted.",
                 icon: "success",
               });
-              const remaining = coffees.filter(cof => cof._id !== _id);
+              const remaining = coffees.filter((cof) => cof._id !== _id);
               setCoffees(remaining);
             }
           });

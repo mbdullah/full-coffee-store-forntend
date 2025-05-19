@@ -1,39 +1,38 @@
-import React from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { Link, useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const UpdateCoffee = () => {
-    const navigate = useNavigate();
-    const {name, photo, price, supplier, quantity, taste, details, _id} = useLoaderData();
+  const navigate = useNavigate();
+  const { name, photo, price, supplier, quantity, taste, details, _id } =
+    useLoaderData();
 
-    const AddUpdateCoffee = e => {
-        e.preventDefault();
-        const coffee = e.target;
-        const formData = new FormData(coffee);
-        const formDataObj = Object.fromEntries(formData.entries());
-        
-        // Send data to db
-        fetch(`http://localhost:3000/coffees/${_id}`, {
-            method: "PUT",
-            headers: {
-                "content-type" : "application/json"
-            }, 
-            body: JSON.stringify(formDataObj)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.modifiedCount){
-                Swal.fire({
-                            title: "Coffee Update Successfully!",
-                            icon: "success",
-                            draggable: true,
-                          });
-                          navigate("/");
-            }
-        })
+  const AddUpdateCoffee = (e) => {
+    e.preventDefault();
+    const coffee = e.target;
+    const formData = new FormData(coffee);
+    const formDataObj = Object.fromEntries(formData.entries());
 
-    }
+    // Send data to db
+    fetch(`https://pet-store-server.vercel.app/coffees/${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formDataObj),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          Swal.fire({
+            title: "Coffee Update Successfully!",
+            icon: "success",
+            draggable: true,
+          });
+          navigate("/");
+        }
+      });
+  };
   return (
     <div
       className="w-full h-full object-cover"
@@ -76,7 +75,7 @@ const UpdateCoffee = () => {
               <fieldset className="rounded-box">
                 <label className="label mb-2 font-semibold">Quantity</label>
                 <input
-                defaultValue={quantity}
+                  defaultValue={quantity}
                   name="quantity"
                   type="text"
                   className="input w-full bg-white h-12"
@@ -96,7 +95,7 @@ const UpdateCoffee = () => {
               <fieldset className="rounded-box">
                 <label className="label mb-2 font-semibold">Taste</label>
                 <input
-                defaultValue={taste}
+                  defaultValue={taste}
                   name="taste"
                   type="text"
                   className="input w-full bg-white h-12"
@@ -106,7 +105,7 @@ const UpdateCoffee = () => {
               <fieldset className="rounded-box">
                 <label className="label mb-2 font-semibold">Price</label>
                 <input
-                defaultValue={price}
+                  defaultValue={price}
                   name="price"
                   type="text"
                   className="input w-full bg-white h-12"

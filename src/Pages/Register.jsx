@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router";
-import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-  const { registerUser, setUser} = useContext(AuthContext);
+  const { registerUser, setUser } = useContext(AuthContext);
 
   const handleAddRegister = (e) => {
     e.preventDefault();
@@ -13,22 +13,21 @@ const Register = () => {
     const { email, password, ...other } = Object.fromEntries(
       formData.entries()
     );
-    
 
     // Send Data firebase Auth
     registerUser(email, password)
       .then((result) => {
         const user = result.user;
         setUser(user);
-        const register = { 
-            email, 
-            ...other ,
-            creationTime: user.metadata.creationTime,
-            lastSignInTime: user.metadata.lastSignInTime
+        const register = {
+          email,
+          ...other,
+          creationTime: user.metadata.creationTime,
+          lastSignInTime: user.metadata.lastSignInTime,
         };
 
         // save data to DB
-        fetch("http://localhost:3000/users", {
+        fetch("https://pet-store-server.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
